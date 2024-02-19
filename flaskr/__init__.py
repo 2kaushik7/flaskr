@@ -21,9 +21,20 @@ def create_app(test_config=None):
         pass
     
     # a simple page that says hello
-    @app.route('/hell')
+    @app.route('/hello')
     def hello_world():
-        return 'Hello world!'
+        return 'Hello,world!'
+
+    from . import db
+    db.init_app(app)
+
+    from . import auth,blog
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/',endpoint='index')
+
+    
     return app
+
 
 
